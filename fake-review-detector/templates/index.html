@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fake Review Detector</title>
+</head>
+<body>
+    <h2>Enter a Review:</h2>
+    <textarea id="review"></textarea>
+    <button onclick="checkReview()">Submit</button>
+    <p id="result"></p>
+
+    <script>
+        async function checkReview() {
+            let reviewText = document.getElementById("review").value;
+            let response = await fetch("http://127.0.0.1:5000/check_review", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ user_id: "user123", review: reviewText })
+            });
+
+            let result = await response.json();
+            document.getElementById("result").innerText = result.message;
+        }
+    </script>
+</body>
+</html>
